@@ -139,3 +139,13 @@ LOGIN_URL = '/users/login/'
 LOGOUT_REDIRECT_URL = '/'
 PASSWORD_RESET_TIMEOUT = 1800   # The number of seconds a password reset link is valid for.
 AUTH_USER_MODEL = 'users.CustomUser'
+
+
+
+# Email Settings
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_PASSWORD = 'jeefgdxmfcjgjkzk'
+EMAIL_HOST_USER = 'hospitalfinder98@gmail.com'

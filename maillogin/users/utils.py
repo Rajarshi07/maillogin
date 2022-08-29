@@ -14,7 +14,7 @@ def EmailCheck(email):
             else:
                 return False,False,'Invalid Email Id'
         except SMTPTemporaryError:
-            return True,False,'Email SMTP Validation Failed'
+            return True,False,"Registration Successful, however we couldn't check the validity of your email ID. Validation email sent. Please check inbox to validate and activate account."
         except DomainNotFoundError:
             return False,False,'Invalid Email Domain'
         except:
