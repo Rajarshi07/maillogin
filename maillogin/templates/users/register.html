@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{%block title%}REGISTER{%endblock%}</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+		crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+	<link rel="stylesheet" href="{%static 'css/login.css'%}">
+</head>
+
+<body style="background-color: #fddf94;">
+	<nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #ffffff;">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="{%url 'home'%}">
+                REGISTRATION
+			</a>
+		</div>
+	</nav>
+	<div class="wrapper fadeInDown">
+		<div id="formContent">
+			<div class="fadeIn first mt-4 mb-2">
+				<!-- <img src="{%static 'images/logo.svg'%}" id="icon" alt="User Icon" style="max-height: 15%;max-width: 15%;" /> -->
+			</div>
+            <div class="fadeIn first mb-2">
+				<h2>Register</h2>
+			</div>
+            {%block content%}
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="text" name="email" placeholder="Email" required>
+                    <input type="password" name="password" placeholder="Password" required>
+                    <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+                    <p style="color: red;">{{error}}</p>
+                    <input type="submit" value="Register">
+                </form>
+            {%endblock%}
+			<div id="formFooter">
+                {%block footer%}
+                    <a class="underlineHover" href="{%url 'login'%}">Login</a>
+                {%endblock%}
+			</div>
+		</div>
+	</div>
+        {%block script%}
+        {%endblock%}
+</body>
+
+</html>
