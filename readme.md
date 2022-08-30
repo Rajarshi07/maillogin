@@ -20,5 +20,6 @@
 6. `python3 manage.py collectstatic`
 7. `python3 manage.py makemigrations`
 8. `python3 manage.py migrate`
-9. `python3 manage.py createsuperuser`
-10. `python3 manage.py runserver`
+9. `python3 adddata.py`
+10. `python3 manage.py createsuperuser`
+11. `python3 manage.py runserver`

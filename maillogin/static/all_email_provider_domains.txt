@@ -1680,7 +1680,7 @@ globetrotter.net
 globo.com
 globomail.com
 gmail.co.za
-gmail.com
+#gmail.com
 gmail.com.au
 gmail.com.br
 gmail.ru
