@@ -12,6 +12,8 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.core.mail import EmailMessage
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 # Create your views here.
 def loggin(request):
@@ -41,6 +43,7 @@ def register(request):
         confirm_password = request.POST.get("confirm_password")
         if password == confirm_password:
             createacc,activateacc,message = EmailCheck(email)
+            print(createacc,activateacc,message)
             if(not createacc):
                 return render(
                     request,
@@ -48,32 +51,39 @@ def register(request):
                     {"error": message},
                 )
             try:
-                user = CustomUser.objects.create_user(email, password,is_active=activateacc)
+                user = CustomUser.objects.create_user(email, password,is_active=False)
                 user.save()
-                if activateacc:
-                    current_site = get_current_site(request)
-                    mail_subject = 'Activate your maillogin account.'
-                    message = render_to_string('activation_mail.html', {
-                        'user': user,
-                        'domain': current_site.domain,
-                        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                        'token': account_activation_token.make_token(user),
-                    })
-                    to_email = email
-                    email = EmailMessage(
-                        mail_subject, message, to=[to_email]
-                    )
-                    email.send()
+            except Exception as e:
+                print(e)
+                return render(
+                    request,
+                    "users/register.html",
+                    {"error": "Email already exists"},
+                )
+            try:
+                current_site = get_current_site(request)
+                mail_subject = 'Activate your maillogin account.'
+                mail_message = render_to_string('activation_mail.html', {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': account_activation_token.make_token(user),
+                })
+                mail = EmailMessage(
+                    mail_subject, mail_message, to=[email]
+                )
+                mail.send()
                 return render(
                     request,
                     "users/register.html",
                     {"error": message},
                 )
-            except:
+            except Exception as e:
+                print(e)
                 return render(
                     request,
                     "users/register.html",
-                    {"error": "Email already exists"},
+                    {"error": "Error sending activation mail. Contact audit team to activate account."},
                 )
         else:
             return render(
